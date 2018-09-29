@@ -35,11 +35,13 @@
 			}
 
 			fixed luminance(fixed4 color){
+				//根据rgb各通道权重，得到亮度值
 				return 0.2125 * color.r + 0.7154 * color.g + 0.0721 * color.b;
 			}
 
 
 			fixed4 fragExtractBright(v2f i) : SV_Target{
+				//提取亮度
 				fixed4 color = tex2D(_MainTex, i.uv);
 				fixed val = clamp(luminance(color) - _LuminanceThreshold, 0.0, 1.0);
 
@@ -158,6 +160,7 @@
 			ENDCG
 		}
 
+		//Bloom!!!
 		Pass {  
 
 			CGPROGRAM  

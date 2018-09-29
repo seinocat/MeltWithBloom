@@ -11,10 +11,15 @@ public class Melts : MonoBehaviour {
 
 	private float meltThreshold = 0.0f;
 
-	void Update(){
+	void Start(){
+		material.SetFloat("_MeltThreshold", 0);
+	}
 
-		meltThreshold = Mathf.Repeat(Time.time * meltSpeed, 2.0f);
+	void Update(){
+		//使用时间控制消融阈值
+		meltThreshold = Mathf.Repeat(Time.time * meltSpeed, 6.0f);
 		material.SetFloat("_MeltThreshold", meltThreshold);
 
 	}
+
 }
