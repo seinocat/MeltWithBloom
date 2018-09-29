@@ -160,7 +160,7 @@
 			ENDCG
 		}
 
-		//Bloom!!!
+		//Bloom!!! 出来吧神龙
 		Pass {  
 
 			CGPROGRAM  

@@ -38,7 +38,7 @@ public class Bloom : PostEffectsBase {
 			//先对原图进行降采样
 			int rtW = src.width/downSample;
 			int rtH = src.height/downSample;
-
+			//第1个pass提取亮度区，为高斯模糊作准备
 			RenderTexture rt0 = RenderTexture.GetTemporary(rtW, rtH, 0);
 			rt0.filterMode = FilterMode.Bilinear;
 
