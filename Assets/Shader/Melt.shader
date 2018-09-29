@@ -1,4 +1,6 @@
-﻿Shader "Unlit/Melt"
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Unlit/Melt"
 {
 	Properties{
 		_MainTex("Base(rgb)", 2D) = "white"{}
@@ -26,6 +28,7 @@
 			float _MeltEdge;
 
 			#include "Lighting.cginc"
+			#include "AutoLight.cginc"
 
 			struct a2v{
 				float4 vertex : POSITION;
@@ -45,7 +48,6 @@
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
 				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-
 				return o;
 			}
 
@@ -56,17 +58,20 @@
 
 				fixed3 albedo = tex2D(_MainTex, i.uv).rgb;
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 
 				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(i.worldNormal, worldLightDir));
 
 				fixed3 lightColor = diffuse + ambient;
 
+				
+
 				float percent = _MeltThreshold / melt.r;
 
 				float lerpEdge = saturate(sign(percent - _ColorFactor - _MeltEdge));
 
-				fixed3 edgeColor = lerp(_EndColor, _StartColor, lerpEdge);
+				fixed3 edgeColor = lerp(lerpEdge, _StartColor, _EndColor);
 
 				float color = saturate(sign(percent - _ColorFactor));
 
@@ -91,5 +96,5 @@
 		}
 	}
 
-	FallBack ""
+	FallBack Off
 }

@@ -97,11 +97,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _ColorFactor: 0.873
-    - _MeltEdge: 0.8
-    - _MeltThreshold: 0
+    - _ColorFactor: 0.749
+    - _MeltEdge: 0.605
+    - _MeltThreshold: 0.316
     m_Colors:
-    - _EndColor: {r: 0.9744422, g: 1, b: 0.7352941, a: 0}
+    - _EndColor: {r: 0.9694726, g: 1, b: 0.6838235, a: 0}
     - _StartColor: {r: 0.99264705, g: 0.97075045, b: 0.97075045, a: 0}
 --- !u!23 &23395535792377766
 MeshRenderer:

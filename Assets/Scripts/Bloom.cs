@@ -10,7 +10,8 @@ public class Bloom : PostEffectsBase {
 
 	public Material material{
 		get{
-			return CheckShaderAndCreateMaterial(bloomShader, bloomMaterial);
+			bloomMaterial = CheckShaderAndCreateMaterial(bloomShader, bloomMaterial);
+			return bloomMaterial;
 		}
 	}
 
@@ -28,7 +29,7 @@ public class Bloom : PostEffectsBase {
 
 	void OnRenderImage(RenderTexture src, RenderTexture dest){
 		if(material != null){
-			material.SetFloat("_LuminancceThreshold", luminanceThreshold);
+			material.SetFloat("_LuminanceThreshold", luminanceThreshold);
 			int rtW = src.width/downSample;
 			int rtH = src.height/downSample;
 
