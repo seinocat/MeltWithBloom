@@ -17,6 +17,10 @@ Shader "Unlit/Melt"
 
 		CGINCLUDE
 
+			#include "Lighting.cginc"
+			#include "UnityCG.cginc"
+			#include "AutoLight.cginc"
+
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			sampler2D _NoiseMap;
@@ -30,7 +34,7 @@ Shader "Unlit/Melt"
 			float _Erode;
 			float _ErodeColor;
 
-			#include "Lighting.cginc"
+
 
 			struct a2v{
 				float4 vertex : POSITION;
@@ -41,14 +45,18 @@ Shader "Unlit/Melt"
 			struct v2f{
 				float4 pos : SV_POSITION;
 				float3 worldNormal : TEXCOORD0;
-				float2 uv : TEXCOORD1;
+				float3 worldPos : TEXCOORD1;
+				float2 uv : TEXCOORD2;
+				SHADOW_COORDS(3)
 			};
 
 			v2f vert(a2v v){
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
+				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+				TRANSFER_SHADOW(o);
 				return o;
 			}
 
@@ -56,21 +64,22 @@ Shader "Unlit/Melt"
 				//使用噪声图，伪随机数
 				fixed3 melt = tex2D(_NoiseMap, i.uv).rgb;
 
-				//采样阈值与设定阈值比较，小于设定的阈值就裁剪掉该片元，也就是消融
+				//采样阈值与设定阈值比较，小于设定的阈值就裁剪掉该片元
 				clip(melt.r - _MeltThreshold);
 
 				//光照计算部分，使用兰伯特漫反射光照模型
 
 				//纹理采样得到反射率
 				fixed3 albedo = tex2D(_MainTex, i.uv).rgb;
-				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-
+				fixed3 worldNormal = normalize(i.worldNormal);
+				fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
+				UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 				//计算环境光
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 				//漫反射
-				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(i.worldNormal, worldLightDir));
+				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(worldNormal, -worldLightDir));
 				//最终光照
-				fixed3 lightColor = diffuse + ambient;
+				fixed3 lightColor = diffuse * atten + ambient;
 
 				//侵蚀计算部分
 				float percent = _MeltThreshold / melt.r;
@@ -95,9 +104,9 @@ Shader "Unlit/Melt"
 		Pass{
 
 			Tags{ "RenderType" = "Opaque"}
-
+			Cull off
 			CGPROGRAM
-
+			
 			#pragma vertex vert
 			#pragma fragment frag
 

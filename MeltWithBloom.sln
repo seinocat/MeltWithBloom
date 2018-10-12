@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeltWithBloom", "Assembly-CSharp.csproj", "{05284D2B-F5CA-7D4E-D49D-0B923D9939A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeltWithBloom", "Assembly-CSharp-Editor.csproj", "{357033A7-4C5A-7D44-00CA-A7FAE0EE5D67}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{05284D2B-F5CA-7D4E-D49D-0B923D9939A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05284D2B-F5CA-7D4E-D49D-0B923D9939A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05284D2B-F5CA-7D4E-D49D-0B923D9939A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{357033A7-4C5A-7D44-00CA-A7FAE0EE5D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{357033A7-4C5A-7D44-00CA-A7FAE0EE5D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{357033A7-4C5A-7D44-00CA-A7FAE0EE5D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{357033A7-4C5A-7D44-00CA-A7FAE0EE5D67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -55,7 +55,9 @@
      <Compile Include="Assets\Scripts\Melts.cs" />
      <Compile Include="Assets\Scripts\PostEffectsBase.cs" />
      <None Include="Assets\Shader\Melt.shader" />
+     <None Include="Assets\Shader\Chapter6-DiffusePixelLevel.shader" />
      <None Include="Assets\Shader\Bloom.shader" />
+     <None Include="Assets\Shader\SingleTexture.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/unity2017/Unity2017.4.1f1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
