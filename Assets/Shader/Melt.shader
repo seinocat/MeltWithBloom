@@ -61,6 +61,7 @@ Shader "Unlit/Melt"
 			}
 
 			fixed4 frag(v2f i) : SV_Target{
+
 				//使用噪声图，伪随机数
 				fixed3 melt = tex2D(_NoiseMap, i.uv).rgb;
 
@@ -82,11 +83,11 @@ Shader "Unlit/Melt"
 				fixed3 lightColor = diffuse * atten + ambient;
 
 				//侵蚀计算部分
-				float percent = _MeltThreshold / melt.r;
+				float result = _MeltThreshold / melt.r;
 
-				if(percent > _Erode){
-
-					if(percent > _ErodeThreshold) {
+				if(result > _Erode){
+					//如果结果大于消融颜色的阈值，则返回消融结束部分的颜色，否则返回初始颜色
+					if(result > _ErodeThreshold) {
 
 						return _EndColor;
 					}
@@ -94,7 +95,7 @@ Shader "Unlit/Melt"
 					return _StartColor;
 
 				}
-
+				//不裁剪就直接返回光照后颜色
 				return fixed4(lightColor, 1);
 			}
 
