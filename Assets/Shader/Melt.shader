@@ -9,7 +9,7 @@ Shader "Unlit/Melt"
 		_EndColor("EndColor", Color) = (0,0,0,0)
 		_MeltThreshold("MeltThreshold", Range(0, 1)) = 0
 		_Erode("Erode", Range(0.0, 1.0)) = 0.98
-		_ErodeColor("ErodeColor", Range(0.0, 1.0)) = 0.71
+		_ErodeThreshold("ErodeThreshold", Range(0.0, 1.0)) = 0.71
 	}
 
 
@@ -32,7 +32,7 @@ Shader "Unlit/Melt"
 			float _MeltThreshold;
 			//控制侵蚀程度
 			float _Erode;
-			float _ErodeColor;
+			float _ErodeThreshold;
 
 
 
@@ -86,7 +86,7 @@ Shader "Unlit/Melt"
 
 				if(percent > _Erode){
 
-					if(percent > _ErodeColor) {
+					if(percent > _ErodeThreshold) {
 
 						return _EndColor;
 					}
