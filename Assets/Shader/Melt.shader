@@ -11,7 +11,7 @@ Shader "Unlit/Melt"
 		_Erode("Erode", Range(0.0, 1.0)) = 0.98
 		_ErodeThreshold("ErodeThreshold", Range(0.0, 1.0)) = 0.71
 		//使用面板控制cull模式
-		[Enum(UnityEngine.Rendering.CullMode)] _cull("Cull Mode", Float) = 1
+		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull Mode", Float) = 0
 	}
 
 
@@ -106,7 +106,7 @@ Shader "Unlit/Melt"
 		Pass{
 
 			Tags{ "RenderType" = "Opaque"}
-			Cull[_cull]
+			Cull[_Cull]
 			CGPROGRAM
 			
 			#pragma vertex vert
