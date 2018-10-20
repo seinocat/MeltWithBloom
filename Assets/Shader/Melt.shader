@@ -10,6 +10,8 @@ Shader "Unlit/Melt"
 		_MeltThreshold("MeltThreshold", Range(0, 1)) = 0
 		_Erode("Erode", Range(0.0, 1.0)) = 0.98
 		_ErodeThreshold("ErodeThreshold", Range(0.0, 1.0)) = 0.71
+		//使用面板控制cull模式
+		[Enum(UnityEngine.Rendering.CullMode)] _cull("Cull Mode", Float) = 1
 	}
 
 
@@ -33,8 +35,6 @@ Shader "Unlit/Melt"
 			//控制侵蚀程度
 			float _Erode;
 			float _ErodeThreshold;
-
-
 
 			struct a2v{
 				float4 vertex : POSITION;
@@ -72,7 +72,9 @@ Shader "Unlit/Melt"
 
 				//纹理采样得到反射率
 				fixed3 albedo = tex2D(_MainTex, i.uv).rgb;
+				//世界法线
 				fixed3 worldNormal = normalize(i.worldNormal);
+				//入射光
 				fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
 				UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 				//计算环境光
@@ -81,7 +83,6 @@ Shader "Unlit/Melt"
 				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(worldNormal, -worldLightDir));
 				//最终光照
 				fixed3 lightColor = diffuse * atten + ambient;
-
 				//侵蚀计算部分
 				float result = _MeltThreshold / melt.r;
 
@@ -95,7 +96,7 @@ Shader "Unlit/Melt"
 					return _StartColor;
 
 				}
-				//不裁剪就直接返回光照后颜色
+				//直接返回光照后颜色
 				return fixed4(lightColor, 1);
 			}
 
@@ -105,7 +106,7 @@ Shader "Unlit/Melt"
 		Pass{
 
 			Tags{ "RenderType" = "Opaque"}
-			Cull off
+			Cull[_cull]
 			CGPROGRAM
 			
 			#pragma vertex vert
