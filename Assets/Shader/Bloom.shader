@@ -39,7 +39,6 @@
 				return 0.2125 * color.r + 0.7154 * color.g + 0.0721 * color.b;
 			}
 
-
 			fixed4 fragExtractBright(v2f i) : SV_Target{
 				//提取亮度
 				fixed4 color = tex2D(_MainTex, i.uv);
@@ -160,7 +159,7 @@
 			ENDCG
 		}
 
-		//Bloom!!! 出来吧神龙
+		//Bloom
 		Pass {  
 
 			CGPROGRAM  

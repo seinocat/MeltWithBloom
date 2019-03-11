@@ -24,7 +24,7 @@ public class Bloom : PostEffectsBase {
 	[Range(0.2f, 3.0f)]
 	public float blurSpread = 0.6f;
 
-	//降采样，一般取2次就行，多了会照常图片像素化
+	//降采样，一般取2次就行，多了会造成图片像素化
 	[Range(1, 3)]
 	public int downSample = 2;
 
